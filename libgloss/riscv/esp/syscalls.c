@@ -29,6 +29,10 @@ __attribute__((weak))
 ssize_t
 _write(int file, const char *ptr, size_t len)
 {
+    if (file != STDOUT_FILENO && file != STDERR_FILENO) {
+        return -1;
+    }
+
     for (size_t i = 0; i < len; i++) {
         board_uart_write_char(ptr[i]);
     }
